@@ -97,24 +97,36 @@ class Ball:
         pygame.draw.circle(surface, COLOR_BALL, (int(self.x + offset[0]), int(self.y + offset[1])), self.radius)
 
 class Brick:
-    def __init__(self, x, y, width, height):
+    def __init__(self, x, y, width, height, tier):
         self.rect = pygame.Rect(x, y, width, height)
-        self.points = 20
+        self.tier = tier
+        self.hp = tier
+        self.base_color = BRICK_TYPES[tier]["color"]
+        self.points = BRICK_TYPES[tier]["points"]
+
+    def hit(self, damage=1):
+        self.hp -= damage
+        return self.hp <= 0
 
     def draw(self, surface, offset=(0, 0)):
-        pygame.draw.rect(surface, (120, 80, 255), self.rect.move(offset), border_radius=4)
+        alpha = int(120 + (135 * (self.hp / self.tier)))
+        s = pygame.Surface((self.rect.width, self.rect.height), pygame.SRCALPHA)
+        pygame.draw.rect(s, (*self.base_color, alpha), (0, 0, self.rect.width, self.rect.height), border_radius=5)
+        pygame.draw.rect(s, (255, 255, 255, 130), (0, 0, self.rect.width, self.rect.height), width=1, border_radius=5)
+        surface.blit(s, (self.rect.x + offset[0], self.rect.y + offset[1]))
 
-def create_bricks():
+def create_cyber_matrix():
     bricks = []
-    rows, cols = 5, 10
+    rows, cols = 6, 10
     pad_x, pad_y = 10, 10
     brick_w = (SCREEN_WIDTH - 60 - ((cols - 1) * pad_x)) // cols
     brick_h = 24
     for r in range(rows):
+        tier = 4 if r == 0 else (3 if r == 1 else (2 if r in [2, 3] else 1))
         for c in range(cols):
             bx = 30 + c * (brick_w + pad_x)
             by = 90 + r * (brick_h + pad_y)
-            bricks.append(Brick(bx, by, brick_w, brick_h))
+            bricks.append(Brick(bx, by, brick_w, brick_h, tier))
     return bricks
 
 def draw_cyber_grid(surface, offset=(0, 0)):
@@ -126,13 +138,13 @@ def draw_cyber_grid(surface, offset=(0, 0)):
 def main():
     pygame.init()
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-    pygame.display.set_caption("NekoBreaker: Cyber Theme")
+    pygame.display.set_caption("NekoBreaker: 4-Tier Matrix")
     clock = pygame.time.Clock()
     font = pygame.font.SysFont("Consolas", 18, bold=True)
 
     paddle = Paddle()
     ball = Ball()
-    bricks = create_bricks()
+    bricks = create_cyber_matrix()
     score, lives = 0, 3
 
     while True:
@@ -154,9 +166,15 @@ def main():
 
         for brick in bricks[:]:
             if ball.rect.colliderect(brick.rect):
-                ball.vy *= -1
-                score += brick.points
-                bricks.remove(brick)
+                prev_x = ball.x - ball.vx
+                if prev_x + ball.radius <= brick.rect.left or prev_x - ball.radius >= brick.rect.right:
+                    ball.vx *= -1
+                else:
+                    ball.vy *= -1
+
+                if brick.hit(1):
+                    score += brick.points
+                    bricks.remove(brick)
                 break
 
         if ball.y > SCREEN_HEIGHT:
@@ -164,7 +182,7 @@ def main():
             if lives <= 0:
                 ball = Ball()
                 score, lives = 0, 3
-                bricks = create_bricks()
+                bricks = create_cyber_matrix()
             else:
                 ball = Ball()
 

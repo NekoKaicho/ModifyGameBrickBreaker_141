@@ -6,11 +6,42 @@ Dibuat & Disesuaikan oleh: **Heyden Alyas**
 
 ---
 
-## 📸 Tangkapan Layar (Screenshots)
+## 📸 Tangkapan Layar Game (`screenshots/`)
 
-| Menu Utama & Navigasi | Gameplay, Ion Laser & Overdrive | Menu Pause Interaktif |
+Folder khusus [`screenshots/`](screenshots/) menyimpan tangkapan layar lengkap setiap fase dan mode permainan:
+
+| 01. Menu Utama | 02. Panduan Kontrol & Info | 03. Gameplay Cyber Matrix |
 | :---: | :---: | :---: |
-| ![Menu](assets/menu.png) | ![Gameplay](assets/gameplay.png) | ![Pause](assets/pause.png) |
+| ![Menu](screenshots/01_menu_utama.png) | ![Kontrol](screenshots/02_panduan_kontrol.png) | ![Gameplay](screenshots/03_gameplay_cyber_matrix.png) |
+
+| 04. Menu Pause Interaktif | 05. Dual Cannon & Overdrive | 06. Game Over Screen |
+| :---: | :---: | :---: |
+| ![Pause](screenshots/04_mode_pause.png) | ![Overdrive](screenshots/05_cyber_overdrive_laser.png) | ![GameOver](screenshots/06_game_over.png) |
+
+> 💡 **Fitur Tangkapan Layar In-Game**: Pemain dapat menekan tombol **`F12`** kapan saja di dalam game untuk menyimpan screenshot resolusi penuh secara otomatis ke folder `screenshots/`.
+
+---
+
+## 📂 Struktur Direktori Proyek
+
+```text
+9 Game BrickBreaker/
+├── screenshots/                               # Folder khusus tangkapan layar game
+│   ├── 01_menu_utama.png
+│   ├── 02_panduan_kontrol.png
+│   ├── 03_gameplay_cyber_matrix.png
+│   ├── 04_mode_pause.png
+│   ├── 05_cyber_overdrive_laser.png
+│   ├── 06_game_over.png
+│   └── 07_stage_victory.png
+├── assets/                                    # Aset gambar dokumentasi
+│   ├── menu.png
+│   ├── gameplay.png
+│   └── pause.png
+├── .gitignore
+├── main.py                                    # 1 file Python mandiri (Game, OOP, Menu, SFX)
+└── README.md                                  # Dokumentasi lengkap edisi Heyden Alyas
+```
 
 ---
 
@@ -23,7 +54,7 @@ Dibuat & Disesuaikan oleh: **Heyden Alyas**
    - Layar panduan kontrol & informasi fungsi power-up (`[H]`).
    - Sistem penyimpanan dan pelacakan rekor nilai (*High Score*).
 3. **Menu Pause Interaktif**:
-   - Tekan `[P]` atau `[ESC]` kapan saja untuk menghentikan permainan sementara.
+   - Tekan `[P]` atau `[ESC]` kapan saja saat bermain untuk menjeda game.
    - Pilihan melanjutkan (*Resume*), restart wave saat ini, atau kembali ke menu utama.
 4. **Sistem Prosedural Sound FX (8-Bit Retro Sci-Fi)**:
    - Efek suara sintetis langsung dihasilkan oleh modul Python `wave` dan `io` tanpa memerlukan file `.wav`/`.mp3` eksternal.
@@ -55,6 +86,7 @@ Dibuat & Disesuaikan oleh: **Heyden Alyas**
 | **`P` / `ESC`** | Membuka Menu Pause |
 | **`M`** | Mengaktifkan / Menonaktifkan Audio SFX |
 | **`H`** | Melihat Panduan & Kontrol di Menu Utama |
+| **`F12`** | Mengambil Tangkapan Layar (Screenshot) Otomatis ke `screenshots/` |
 
 ---
 

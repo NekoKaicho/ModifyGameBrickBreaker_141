@@ -10,11 +10,13 @@ meriam laser, mode Overdrive penembus matrix, serta menu pause dan navigasi leng
 
 import pygame
 import sys
+import os
 import math
 import random
 import io
 import wave
 import struct
+import datetime
 
 # ==============================================================================
 # 1. KONFIGURASI LAYAR & PALET WARNA CYBER-ARCADE
@@ -526,6 +528,13 @@ def main():
                 sys.exit()
 
             if event.type == pygame.KEYDOWN:
+                # Screenshot shortcut (F12)
+                if event.key == pygame.K_F12:
+                    os.makedirs("screenshots", exist_ok=True)
+                    ss_name = f"screenshots/screenshot_{datetime.datetime.now().strftime('%Y%m%d_%H%M%S')}.png"
+                    pygame.image.save(screen, ss_name)
+                    fx.spawn_burst(SCREEN_WIDTH // 2, 30, COLOR_ACCENT, count=12)
+
                 # Toggle Mute global
                 if event.key == pygame.K_m and state not in ["PAUSED"]:
                     snd.toggle()

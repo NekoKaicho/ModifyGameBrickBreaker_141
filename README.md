@@ -1,6 +1,6 @@
 # ⚡ NekoBreaker: Cyber Overdrive
 
-Game arcade modern Brick Breaker bertema **Cyberpunk Neon & Holographic Void** yang dikembangkan dengan arsitektur **Object-Oriented Programming (OOP)** penuh dalam **1 file Python tunggal (`main.py`)**. 
+Game arcade modern Brick Breaker bertema **Cyberpunk Neon & Holographic Void** yang dikembangkan dengan arsitektur **Object-Oriented Programming (OOP)** penuh dalam **1 file Python tunggal (`brickbreaker.py`)**. 
 
 Dibuat & Disesuaikan oleh: **Heyden Alyas**
 
@@ -39,7 +39,7 @@ Folder khusus [`screenshots/`](screenshots/) menyimpan tangkapan layar lengkap s
 │   ├── gameplay.png
 │   └── pause.png
 ├── .gitignore
-├── main.py                                    # 1 file Python mandiri (Game, OOP, Menu, SFX)
+├── brickbreaker.py                            # 1 file Python mandiri (Game, OOP, Menu, SFX)
 └── README.md                                  # Dokumentasi lengkap edisi Heyden Alyas
 ```
 
@@ -47,7 +47,7 @@ Folder khusus [`screenshots/`](screenshots/) menyimpan tangkapan layar lengkap s
 
 ## 🌟 Fitur Unggulan
 
-1. **Arsitektur Mandiri 1 File (`main.py`)**:
+1. **Arsitektur Mandiri 1 File (`brickbreaker.py`)**:
    - Seluruh logika, grafis, partikel, audio synthesizer, dan sistem status terintegrasi dalam satu file tanpa dependensi aset eksternal.
 2. **Menu Utama & Panduan Kontrol Interaktif**:
    - Menu utama dinamis dengan efek animasi teks berdenyut (*pulse glow*).
@@ -92,12 +92,12 @@ Folder khusus [`screenshots/`](screenshots/) menyimpan tangkapan layar lengkap s
 
 ## 🚀 Cara Menjalankan
 
-Cukup jalankan satu file ini menggunakan Python:
+Cukup jalankan file ini menggunakan Python:
 
 ```powershell
-python main.py
+python brickbreaker.py
 ```
 atau jika menggunakan virtual environment:
 ```powershell
-.\.venv\Scripts\python.exe main.py
+.\.venv\Scripts\python.exe brickbreaker.py
 ```

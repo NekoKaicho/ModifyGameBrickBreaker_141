@@ -2,22 +2,46 @@ import pygame
 import sys
 import math
 import random
+import io
+import wave
+import struct
 
 SCREEN_WIDTH = 850
 SCREEN_HEIGHT = 680
 FPS = 60
 
-COLOR_BG = (15, 15, 25)
-COLOR_TEXT = (240, 240, 255)
-COLOR_PADDLE = (160, 100, 240)
-COLOR_BALL = (255, 255, 255)
-COLOR_BRICK = (100, 130, 220)
+COLOR_BG = (8, 6, 18)
+COLOR_GRID = (24, 18, 52)
+COLOR_PADDLE = (165, 95, 255)
+COLOR_PADDLE_EXPAND = (60, 235, 255)
+COLOR_BALL = (245, 250, 255)
+COLOR_BALL_GLOW = (150, 60, 245)
+COLOR_LASER = (0, 255, 230)
+COLOR_TEXT = (235, 230, 255)
+COLOR_MUTED = (125, 115, 155)
+COLOR_ACCENT = (0, 255, 220)
+COLOR_GOLD = (255, 215, 60)
+COLOR_RED = (255, 65, 115)
+
+BRICK_TYPES = {
+    1: {"color": (120, 80, 255),  "points": 15, "name": "Cyber-I"},
+    2: {"color": (0, 210, 255),   "points": 35, "name": "Cyber-II"},
+    3: {"color": (230, 50, 210),  "points": 60, "name": "Pulse Core"},
+    4: {"color": (255, 215, 60),  "points": 100, "name": "Hyper Reactor"},
+}
+
+POWERUP_TYPES = {
+    "EXPAND": {"color": (0, 255, 180), "label": "WIDE"},
+    "LASER":  {"color": (255, 60, 160), "label": "GUN"},
+    "MULTI":  {"color": (255, 210, 0),  "label": "x2"},
+    "HEAL":   {"color": (255, 65, 115), "label": "+1"},
+}
 
 PADDLE_WIDTH = 115
 PADDLE_HEIGHT = 16
 PADDLE_SPEED = 9.5
 BALL_RADIUS = 8
-BALL_SPEED = 7.2
+BALL_BASE_SPEED = 7.2
 
 class Paddle:
     def __init__(self):
@@ -47,8 +71,8 @@ class Ball:
         self.x = x if x else SCREEN_WIDTH // 2
         self.y = y if y else SCREEN_HEIGHT - 80
         angle = math.radians(random.choice([-45, 45]))
-        self.vx = BALL_SPEED * math.sin(angle)
-        self.vy = -BALL_SPEED * math.cos(angle)
+        self.vx = BALL_BASE_SPEED * math.sin(angle)
+        self.vy = -BALL_BASE_SPEED * math.cos(angle)
 
     @property
     def rect(self):
@@ -78,7 +102,7 @@ class Brick:
         self.points = 20
 
     def draw(self, surface, offset=(0, 0)):
-        pygame.draw.rect(surface, COLOR_BRICK, self.rect.move(offset), border_radius=4)
+        pygame.draw.rect(surface, (120, 80, 255), self.rect.move(offset), border_radius=4)
 
 def create_bricks():
     bricks = []
@@ -93,10 +117,16 @@ def create_bricks():
             bricks.append(Brick(bx, by, brick_w, brick_h))
     return bricks
 
+def draw_cyber_grid(surface, offset=(0, 0)):
+    for x in range(0, SCREEN_WIDTH, 40):
+        pygame.draw.line(surface, COLOR_GRID, (x + offset[0] // 2, 60), (x + offset[0] // 2, SCREEN_HEIGHT))
+    for y in range(60, SCREEN_HEIGHT, 40):
+        pygame.draw.line(surface, COLOR_GRID, (0, y + offset[1] // 2), (SCREEN_WIDTH, y + offset[1] // 2))
+
 def main():
     pygame.init()
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-    pygame.display.set_caption("NekoBreaker: OOP Architecture")
+    pygame.display.set_caption("NekoBreaker: Cyber Theme")
     clock = pygame.time.Clock()
     font = pygame.font.SysFont("Consolas", 18, bold=True)
 
@@ -139,6 +169,8 @@ def main():
                 ball = Ball()
 
         screen.fill(COLOR_BG)
+        draw_cyber_grid(screen)
+
         for b in bricks:
             b.draw(screen)
         paddle.draw(screen)
